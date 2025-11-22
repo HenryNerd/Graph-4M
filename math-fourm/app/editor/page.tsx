@@ -3,6 +3,8 @@
 import Script from "next/script";
 import Form from "next/form";
 import { useRef } from "react";
+import { submit_post } from "@/app/actions/submit_post"
+import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
 
 declare global {
     interface Window {
@@ -30,7 +32,7 @@ export default function Home() {
                 {"author": author},
                 {"state": state}
             ];
-            console.log(dataToSend);
+            submit_post(dataToSend)
         }
 
     }
