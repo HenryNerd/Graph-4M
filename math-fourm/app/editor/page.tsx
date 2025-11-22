@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import Form from "next/form";
 import { useRef } from "react";
 
 declare global {
@@ -11,23 +12,38 @@ declare global {
 
 export default function Home() {
     const calcRef = useRef(null);
+    const formRef = useRef(null);
     const onScriptLoad = () => {
         if (window.Desmos && calcRef.current) {
             const calculator = new window.Desmos.GraphingCalculator(calcRef.current);
-            calculator.expressions = false;
-            console.log(calculator.getState());
         }
     };
 
+    const handleSubmit = (formData: FormData) => {
+        if (window.Desmos && calcRef.current) {
+            const calculator = new window.Desmos.GraphingCalculator(calcRef.current);
+            const state = JSON.stringify(calculator.getState());
+            const title = formData.get("title");
+            const author = formData.get("author");
+            const dataToSend = [
+                {"title": title},
+                {"author": author},
+                {"state": state}
+            ];
+            console.log(dataToSend);
+        }
+
+    }
+
     return (
         <div className="overflow-hidden">
-            <form>
-                <label>Graph Name: </label>
-                <input type="text"></input>
-                <label>Graph Author: </label>
-                <input type=""></input>
-                <input type="submit"></input>
-            </form>
+            <Form action={handleSubmit}>
+                <label>Graph Title</label>
+                <input name="title"></input>
+                <label>Graph Author</label>
+                <input name="author"></input>
+                <button type="submit">Save</button>
+            </Form>
             <div className="align-bottom">
                 <Script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=c1a0cb85f3d54439ac59648737fd0bb3" strategy="afterInteractive" onLoad={onScriptLoad} />
                 <div id="calculator" ref={calcRef} className="w-screen h-screen"></div>
