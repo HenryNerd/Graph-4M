@@ -58,7 +58,7 @@ export default function Project({ state, user, projectName }: ProjectProps) {
     }, [state]);
 
     return (
-        <Card className="w-[300px] h-[350px] bg-rose-100">
+        <Card className="w-[300px] h-[350px] bg-rose-100/75 hover:bg-rose-100">
             <CardContent>
                 <div className="align-bottom">
                     <div ref={calcRef} className="w-[250px] h-[250px]"></div>
