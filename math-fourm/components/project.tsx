@@ -1,16 +1,11 @@
 "use client";
-
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
-    CardFooter,
-    CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import Script from "next/script";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 declare global {
     interface Window {
@@ -20,39 +15,56 @@ declare global {
 
 type ProjectProps = {
     state: any;
+    user: string;
+    projectName: string;
 };
 
-export default function Project({ state }: ProjectProps) {
+export default function Project({ state, user, projectName }: ProjectProps) {
     const calcRef = useRef<HTMLDivElement>(null);
     const calculatorRef = useRef<any>(null);
 
-    const onScriptLoad = () => {
-        if (window.Desmos && calcRef.current) {
-            calculatorRef.current = new window.Desmos.GraphingCalculator(calcRef.current, {
-                expressions: false,
-                zoomButtons: false,
-                settingsMenu: false,
-                lockViewport: true,
-            });
+    useEffect(() => {
+        let checkInterval: NodeJS.Timeout | null = null;
 
-            calculatorRef.current.setState(state);
+        const initCalculator = () => {
+            if (window.Desmos && calcRef.current && !calculatorRef.current) {
+                calculatorRef.current = window.Desmos.GraphingCalculator(calcRef.current, {
+                    expressions: false,
+                    zoomButtons: false,
+                    settingsMenu: false,
+                    lockViewport: true,
+                });
+                calculatorRef.current.setState(state);
+            }
+        };
+
+        if (window.Desmos) {
+            initCalculator();
+        } else {
+            checkInterval = setInterval(() => {
+                if (window.Desmos) {
+                    if (checkInterval) clearInterval(checkInterval);
+                    initCalculator();
+                }
+            }, 100);
         }
-    };
 
+        return () => {
+            if (checkInterval) clearInterval(checkInterval);
+            if (calculatorRef.current) {
+                calculatorRef.current.destroy();
+            }
+        };
+    }, [state]);
 
     return (
-        <Card className="w-[300px] h-[350px]">
+        <Card className="w-[300px] h-[350px] bg-rose-100">
             <CardContent>
                 <div className="align-bottom">
-                    <Script
-                        src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=c1a0cb85f3d54439ac59648737fd0bb3"
-                        strategy="afterInteractive"
-                        onLoad={onScriptLoad}
-                    />
-                    <div id="calculator" ref={calcRef} className="w-[250px] h-[250px]"></div>
+                    <div ref={calcRef} className="w-[250px] h-[250px]"></div>
                 </div>
-                <CardTitle className="mt-4">Project Name</CardTitle>
-                <CardDescription>By: User</CardDescription>
+                <CardTitle className="mt-4">{projectName}</CardTitle>
+                <CardDescription>By: {user}</CardDescription>
             </CardContent>
         </Card>
     )

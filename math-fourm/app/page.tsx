@@ -1,6 +1,20 @@
+"use client";
 import Project from "../components/project"
+import Script from "next/script";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
 
-const state = {
+const stateOne = {
   version: 10,
   randomSeed: "3ff2f425b09c2bb2b",
   graph: {
@@ -19,17 +33,84 @@ const state = {
   }
 };
 
+const stateTwo = {
+  version: 10,
+  randomSeed: "a1b2c3d4e5f67890",
+  graph: {
+    viewport: {
+      xmin: -5,
+      ymin: -5,
+      xmax: 5,
+      ymax: 5
+    }
+  },
+  expressions: {
+    list: [
+      { id: "1", type: "expression", latex: "y=2*x+1" },
+      { id: "2", type: "expression", latex: "y=cos(x)" },
+      { id: "3", type: "expression", latex: "y=x^3-3*x" }
+    ]
+  }
+};
 
 export default function Home() {
+  const router = useRouter();
+
+    const goToExplore = () => {
+    router.push("/");
+  };
+
+      const goToEditor = () => {
+    router.push("/editor");
+  };
   return (
-    <div className="bg-gray-200 m-6">
-      <div className="grid grid-cols-4 gap-2">
-        <Project state={state}></Project>
-        <Project state={state}></Project>
-        <Project state={state}></Project>
-        <Project state={state}></Project>
-        <Project state={state}></Project>
-        <Project state={state}></Project>
+    <div className="bg-gray-200">
+<NavigationMenu className="mb-10">
+  <NavigationMenuList className="flex items-center w-full">
+    <div className="flex space-x-4">
+      <NavigationMenuLink>Home</NavigationMenuLink>
+      <NavigationMenuLink onClick={goToExplore}>Explore</NavigationMenuLink>
+      <NavigationMenuLink onClick={goToEditor}>Editor</NavigationMenuLink>
+    </div>
+    <NavigationMenuItem className="ml-auto">
+      <NavigationMenuTrigger className="bg-gray-200">My Profile</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <div className="grid w-[300px] p-4">
+          <h1 className="text-3xl">Henry Veedahl</h1>
+          <h2 className="text-lg font-light">@henrynerd</h2>
+          <Button className="mt-5">Sign Out</Button>
+        </div>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+
+
+      <div className="flex justify-center bg-gray-200">
+        <div className="bg-gray-200 items-center">
+          <Script
+            src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=c1a0cb85f3d54439ac59648737fd0bb3"
+            strategy="afterInteractive"
+          />
+          <div className="grid grid-cols-4 gap-6 bg-gray-200">
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
+            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+          </div>
+        </div>
       </div>
     </div>
   );
