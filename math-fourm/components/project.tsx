@@ -15,13 +15,17 @@ declare global {
 
 type ProjectProps = {
     state: any;
+    user: string;
+    projectName: string;
 };
 
-export default function Project({ state }: ProjectProps) {
+export default function Project({ state, user, projectName }: ProjectProps) {
     const calcRef = useRef<HTMLDivElement>(null);
     const calculatorRef = useRef<any>(null);
 
     useEffect(() => {
+        let checkInterval: NodeJS.Timeout | null = null;
+
         const initCalculator = () => {
             if (window.Desmos && calcRef.current && !calculatorRef.current) {
                 calculatorRef.current = window.Desmos.GraphingCalculator(calcRef.current, {
@@ -37,17 +41,16 @@ export default function Project({ state }: ProjectProps) {
         if (window.Desmos) {
             initCalculator();
         } else {
-            const checkDesmos = setInterval(() => {
+            checkInterval = setInterval(() => {
                 if (window.Desmos) {
-                    clearInterval(checkDesmos);
+                    if (checkInterval) clearInterval(checkInterval);
                     initCalculator();
                 }
             }, 100);
-
-            return () => clearInterval(checkDesmos);
         }
 
         return () => {
+            if (checkInterval) clearInterval(checkInterval);
             if (calculatorRef.current) {
                 calculatorRef.current.destroy();
             }
@@ -55,13 +58,13 @@ export default function Project({ state }: ProjectProps) {
     }, [state]);
 
     return (
-        <Card className="w-[300px] h-[350px]">
+        <Card className="w-[300px] h-[350px] bg-rose-100">
             <CardContent>
                 <div className="align-bottom">
                     <div ref={calcRef} className="w-[250px] h-[250px]"></div>
                 </div>
-                <CardTitle className="mt-4">Project Name</CardTitle>
-                <CardDescription>By: User</CardDescription>
+                <CardTitle className="mt-4">{projectName}</CardTitle>
+                <CardDescription>By: {user}</CardDescription>
             </CardContent>
         </Card>
     )
