@@ -28,8 +28,6 @@ export default async function Post({
     const { post_id } = await params
     const row = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
 
-    console.log(row.content);
-
     return (
         <div>
             <Viewer state={row.content}></Viewer>

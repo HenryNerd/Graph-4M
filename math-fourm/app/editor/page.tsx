@@ -13,27 +13,28 @@ declare global {
 
 export default function Home() {
     const calcRef = useRef(null);
+    var state = {};
     const onScriptLoad = () => {
         if (window.Desmos && calcRef.current) {
             const calculator = new window.Desmos.GraphingCalculator(calcRef.current);
+            calculator.observeEvent('change', () => {
+                state = calculator.getState();
+            })
         }
     };
 
     const handleSubmit = (formData: FormData) => {
         if (window.Desmos && calcRef.current) {
-            const calculator = new window.Desmos.GraphingCalculator(calcRef.current);
-            const state = JSON.stringify(calculator.getState());
             const title = formData.get("title");
             const author = formData.get("author");
+            const stateString = JSON.stringify(state);
             const dataToSend = {
                 "title": title,
                 "author": author,
-                "state": state
+                "state": stateString 
             }
             submit_post(dataToSend)
-            calculator.destroy();
         }
-
     }
 
     return (
