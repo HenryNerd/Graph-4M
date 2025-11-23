@@ -4,7 +4,6 @@ import Script from "next/script";
 import Form from "next/form";
 import { useRef } from "react";
 import { submit_post } from "@/app/actions/submit_post"
-import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
 
 declare global {
     interface Window {
@@ -41,9 +40,9 @@ export default function Home() {
         <div className="overflow-hidden">
             <Form action={handleSubmit}>
                 <label>Graph Title: </label>
-                <input name="title"></input>
+                <input name="title" required></input>
                 <label>Graph Author: </label>
-                <input name="author"></input>
+                <input name="author" required></input>
                 <button type="submit">Save</button>
             </Form>
             <div className="align-bottom">
