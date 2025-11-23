@@ -25,7 +25,7 @@ export default async function SignupPage() {
             <div className='flex justify-center items-center'>
                 <Card className='w-[500px] bg-gray-100'>
                     <CardHeader>
-                        <CardTitle className='text-center text-xl'>Sign Up</CardTitle>
+                        <CardTitle className='text-center text-2xl'>Sign Up</CardTitle>
                         <CardAction>
                         <Link href="/login" className=''>
                             Sign In
@@ -46,7 +46,7 @@ export default async function SignupPage() {
                             <label htmlFor="password">Password</label>
                             <Input type="password" id="password" name="password" />
                         </div>
-                        <Button className='w-full max-w-[475px]' type="submit">Sign up</Button>
+                        <Button className='w-full max-w-[475px] bg-rose-100 hover:bg-rose-200 text-color-black' type="submit">Sign up</Button>
                     </form>
                 </CardContent>
             </Card>
