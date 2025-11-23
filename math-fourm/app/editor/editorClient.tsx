@@ -11,14 +11,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 
-import { AlertCircleIcon} from "lucide-react"
-
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert"
-
 declare global {
     interface Window {
         Desmos: any;
