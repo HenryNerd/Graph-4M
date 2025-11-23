@@ -20,6 +20,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
 import Navbar from "@/components/navbar"
+import { AuthError } from "next-auth"
 
 export default async function SignIn({
     searchParams,
@@ -28,6 +29,7 @@ export default async function SignIn({
 }) {
     const params = await searchParams
     const error = params?.error
+    const showerror = error === "1"
 
     return (
         <div className="bg-gray-200 min-h-screen">
@@ -36,7 +38,15 @@ export default async function SignIn({
                 <form
                     action={async (formData) => {
                         "use server"
-                        await signIn("credentials", formData)
+                        try {
+                            await signIn("credentials", formData)
+                        } catch (error) {
+                            if (error instanceof AuthError) {
+                                redirect("/login?error=1")
+                            } else {
+                                redirect("/")
+                            }
+                        }
                     }}
                 >
                     <Card className='w-[500px] bg-gray-100'>
