@@ -25,7 +25,11 @@ export default function Navbar({username}) {
     };
 
     const goToEditor = () => {
-        router.push("/editor");
+        if (username == "Guest") {
+            router.push("/login");
+        } else {
+            router.push("/editor");
+        }
     };
 
     const goToLogin = () => {

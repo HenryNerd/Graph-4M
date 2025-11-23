@@ -27,6 +27,10 @@ declare global {
 
 export default function EditorClient({ username, auth_status }: { username?: string | null, auth_status?: boolean | false }) {
     const router = useRouter();
+    if (username == "Guest") {
+        router.push("/login");
+    }
+    
     const calcRef = useRef<HTMLDivElement>(null);
     const calculatorRef = useRef<any>(null);
     const stateRef = useRef<any>({});
@@ -111,10 +115,6 @@ export default function EditorClient({ username, auth_status }: { username?: str
         }
     }
 
-    const goToLogin = () => {
-        router.push("/login")
-    }
-
     return (
         <div className="overflow-hidden bg-gray-200">
             <Navbar username={username} />
@@ -125,14 +125,6 @@ export default function EditorClient({ username, auth_status }: { username?: str
                 <div className="w-1/3 h-full m-5">
                     <Card className="p-4 h-[680px]">
                         <CardTitle className="text-2xl">New Project</CardTitle>
-                        <Alert variant="destructive">
-                            <AlertCircleIcon />
-                            <AlertTitle>You Are Not Signed In</AlertTitle>
-                            <AlertDescription>
-                                <p>Guest acounts are not allowed to post any projects.</p>
-                                <Button variant="outline" onClick={goToLogin} className="w-full p-4">Sign In</Button>
-                            </AlertDescription>
-                        </Alert>
                         <form onSubmit={handleSubmit} className="justify-between">
                             <label>Graph Title</label>
                             <Input
