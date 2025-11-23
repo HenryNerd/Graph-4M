@@ -1,16 +1,38 @@
 import db from "@/lib/db"
+import Viewer from "@/components/viewer";
+
+const state = {
+    version: 10,
+    randomSeed: "3ff2f425b09c2bb2b",
+    graph: {
+        viewport: {
+            xmin: -10,
+            ymin: -10,
+            xmax: 10,
+            ymax: 10
+        }
+    },
+    expressions: {
+        list: [
+            { id: "1", type: "expression", latex: "y=x^2" },
+            { id: "2", type: "expression", latex: "y=\\sin(x)" }
+        ]
+    }
+};
 
 export default async function Post({
     params,
 }: { 
-    params: Promise<{post_id: number}>
+    params: Promise<{post_id: string}>
 }) {
     const { post_id } = await params
-    const row = db.prepare("SELECT * FROM posts WHERE id = ?").get(post_id)
+    const row = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
+
+    console.log(row.content);
 
     return (
         <div>
-            <p>Post: {post_id}</p>
+            <Viewer state={row.content}></Viewer>
         </div>
     )
 }

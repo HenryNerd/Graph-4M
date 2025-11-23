@@ -9,14 +9,12 @@ declare global {
     }
 }
 
-export default function Viewer({ params }: { params: Promise<{ id: string }> }) {
-    const resolvedParams = React.use(params);
-    console.log(resolvedParams);
-
+export default function Viewer({state}: any) {
     const calcRef = useRef(null);
     const onScriptLoad = () => {
         if (window.Desmos && calcRef.current) {
-            const calculator = new window.Desmos.GraphingCalculator(calcRef.current, {expressions: false});
+            const calculator = new window.Desmos.GraphingCalculator(calcRef.current, {expressions: true});
+            calculator.setState(state);
         }
     };
 
