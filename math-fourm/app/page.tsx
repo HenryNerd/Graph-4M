@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import Project from "../components/project"
 import Script from "next/script";
 import Navbar from "@/components/navbar";
@@ -52,11 +50,3 @@ export default function Home() {
     </div>
   );
 }
-=======
-import { auth } from "@/auth"
-import Home from "@/app/home"
-export default async function Page() {
-  const session = await auth();
-  return <Home initialSession={session} />;
-}
->>>>>>> Stashed changes
