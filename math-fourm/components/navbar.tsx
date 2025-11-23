@@ -22,6 +22,10 @@ export default function Navbar({username}) {
     const goToEditor = () => {
         router.push("/editor");
     };
+
+    const goToLogin = () => {
+        router.push("/login");
+    };
     return (
         <NavigationMenu className="mb-5">
             <NavigationMenuList className="flex items-center w-full">
@@ -37,6 +41,7 @@ export default function Navbar({username}) {
                             <h1 className="text-3xl">Henry Veedahl</h1>
                             <h2 className="text-lg font-light">@{username}</h2>
                             <Button className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
+                            <Button className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={goToLogin}>Sign In</Button>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
