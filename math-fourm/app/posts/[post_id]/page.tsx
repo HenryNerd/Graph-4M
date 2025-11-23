@@ -1,5 +1,6 @@
 import db from "@/lib/db"
 import Viewer from "@/components/viewer";
+import Navbar from "@/components/navbar";
 
 import { redirect } from "next/navigation";
 
@@ -36,6 +37,7 @@ export default async function Post({
 
     return (
         <div>
+            <Navbar></Navbar>
             <Viewer state={row.content}></Viewer>
         </div>
     )

@@ -14,6 +14,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { json } from "zod";
 
 declare global {
     interface Window {
@@ -36,14 +37,12 @@ export default function Home() {
     const handleSubmit = (formData: FormData) => {
         if (window.Desmos && calcRef.current) {
             const calculator = new window.Desmos.GraphingCalculator(calcRef.current, {keypad: false});
-            const state = JSON.stringify(calculator.getState());
             const title = formData.get("title");
             const author = formData.get("author");
-            const stateString = JSON.stringify(state);
             const dataToSend = {
                 "title": title,
                 "author": author,
-                "state": stateString 
+                "state": JSON.stringify(state) 
             }
             submit_post(dataToSend)
         }
