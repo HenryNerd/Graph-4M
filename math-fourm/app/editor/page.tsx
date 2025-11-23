@@ -10,6 +10,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
 
 declare global {
     interface Window {
@@ -18,6 +19,7 @@ declare global {
 }
 
 export default function Home() {
+    const router = useRouter()
     const calcRef = useRef<HTMLDivElement>(null);
     const calculatorRef = useRef<any>(null);
     const stateRef = useRef<any>({});
@@ -77,7 +79,8 @@ export default function Home() {
             "state": JSON.stringify(stateRef.current)
         }
         
-        submit_post(dataToSend);
+        submit_post(dataToSend)
+        router.push("/")
     }
 
     return (
