@@ -35,6 +35,10 @@ export default function Navbar({username}: any) {
     const goToLogin = () => {
         router.push("/login");
     };
+
+    const goToSignup = () => {
+        router.push("/signup");
+    };
     return (
         <NavigationMenu className="mb-5">
             <NavigationMenuList className="flex items-center w-full">
@@ -50,6 +54,8 @@ export default function Navbar({username}: any) {
                             <h2 className="text-lg font-light">@{username}</h2>
                             <Button hidden={!hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
                             <Button hidden={hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={goToLogin}>Sign In</Button>
+                            <hr hidden={hidelogin} className="m-3"/>
+                            <Button hidden={hidelogin}className=" bg-rose-100 text-black hover:bg-rose-200" onClick={goToSignup}>Sign Up</Button>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
