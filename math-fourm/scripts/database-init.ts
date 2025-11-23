@@ -4,8 +4,8 @@ var db = new Database("main.db")
 db.exec(`
     CREATE TABLE IF NOT EXISTS posts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        author INTEGER,
-        title STRING
+        author STRING,
+        title STRING,
         content STRING
     )
 `);

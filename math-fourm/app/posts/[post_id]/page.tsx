@@ -10,7 +10,7 @@ export default async function Post({
     const { post_id } = await params
     const row = db.prepare("SELECT * FROM posts WHERE id = ?").get(post_id)
 
-return (
+    return (
         <div>
             <p>Post: {post_id}</p>
         </div>

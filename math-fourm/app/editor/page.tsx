@@ -26,11 +26,11 @@ export default function Home() {
             const state = JSON.stringify(calculator.getState());
             const title = formData.get("title");
             const author = formData.get("author");
-            const dataToSend = [
-                {"title": title},
-                {"author": author},
-                {"state": state}
-            ];
+            const dataToSend = {
+                "title": title,
+                "author": author,
+                "state": state
+            }
             submit_post(dataToSend)
             calculator.destroy();
         }
