@@ -20,6 +20,7 @@ type ProjectProps = {
 };
 
 export default function Project({ state, user, projectName }: ProjectProps) {
+    const link = "/posts/" + projectName
     const calcRef = useRef<HTMLDivElement>(null);
     const calculatorRef = useRef<any>(null);
     const [isReady, setIsReady] = useState(false);
@@ -81,7 +82,7 @@ export default function Project({ state, user, projectName }: ProjectProps) {
                         style={{ minHeight: '250px' }}
                     />
                 </div>
-                <CardTitle className="mt-4">{projectName}</CardTitle>
+                <a href={link}><CardTitle className="mt-4">{projectName}</CardTitle></a>
                 <CardDescription>By: {user}</CardDescription>
             </CardContent>
         </Card>
