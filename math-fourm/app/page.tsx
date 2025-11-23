@@ -1,6 +1,10 @@
 import Project from "../components/project"
 import Navbar from "@/components/navbar";
 import db from "@/lib/db"
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group"
 
 import { auth } from "@/auth"
 
@@ -12,7 +16,7 @@ export default async function Home() {
   var titles = []
   var row_count = db.prepare("SELECT COUNT(*) AS count FROM posts").get()
   const count = Number(row_count?.count ?? 0)
-  if(count) {
+  if (count) {
     for (let i = 0; i < 16; i++) {
       const row = db.prepare("SELECT * FROM posts ORDER BY RANDOM() LIMIT 1").get()
       if (row && row.content) {
@@ -28,6 +32,14 @@ export default async function Home() {
     <div className="bg-gray-200">
       <Navbar username={username}></Navbar>
       <div className="flex justify-center bg-gray-200">
+        <ToggleGroup type="single">
+          <ToggleGroupItem value="bold" aria-label="Toggle bold">
+          </ToggleGroupItem>
+          <ToggleGroupItem value="italic" aria-label="Toggle italic">
+          </ToggleGroupItem>
+          <ToggleGroupItem value="strikethrough" aria-label="Toggle strikethrough">
+          </ToggleGroupItem>
+        </ToggleGroup>
         <div className="bg-gray-200 items-center">
           <div className="grid grid-cols-4 gap-6 bg-gray-200">
             <Project state={states[0]} user={authors[0]} projectName={titles[0]}></Project>
