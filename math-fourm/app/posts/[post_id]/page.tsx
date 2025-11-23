@@ -11,7 +11,7 @@ export default async function Post({
 }) {
     const session = await auth();
     console.log(session)
-    const username = session?.user?.name
+    const username = session?.user?.name || "Guest"
     
     const { post_id } = await params
     const row = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
