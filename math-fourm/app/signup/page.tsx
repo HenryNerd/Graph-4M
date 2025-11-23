@@ -12,34 +12,45 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
 import Navbar from '@/components/navbar'
-
 import { auth } from "@/auth"
+import Link from "next/link"
 
 export default async function SignupPage() {
     const session = await auth();
-    const username = session?.user?.name || "Guest"; 
+    const username = session?.user?.name || "Guest";
+
     return (
-        <div className='bg-gray-200'>
+        <div className='bg-gray-200 min-h-screen'>
             <Navbar username={username}></Navbar>
             <div className='flex justify-center items-center'>
                 <Card className='w-[500px] bg-gray-100'>
-                    <form action={create_account}>
-                        <div>
+                    <CardHeader>
+                        <CardTitle className='text-center text-xl'>Sign Up</CardTitle>
+                        <CardAction>
+                        <Link href="/login" className=''>
+                            Sign In
+                        </Link>
+                    </CardAction>
+                </CardHeader>
+                <CardContent className='pt-6'>
+                    <form action={create_account} className='flex flex-col items-center gap-4'>
+                        <div className='w-full max-w-[475px]'>
                             <label htmlFor='realname'>Name</label>
-                            <Input className="w=[475px]" id="realname" name="realname" />
+                            <Input id="realname" name="realname" />
                         </div>
-                        <div>
+                        <div className='w-full max-w-[475px]'>
                             <label htmlFor='username'>Username</label>
                             <Input id="username" name="username" />
                         </div>
-                        <div>
+                        <div className='w-full max-w-[475px]'>
                             <label htmlFor="password">Password</label>
                             <Input type="password" id="password" name="password" />
                         </div>
-                        <Button type="submit">Sign up</Button>
+                        <Button className='w-full max-w-[475px]' type="submit">Sign up</Button>
                     </form>
-                </Card>
-            </div>
+                </CardContent>
+            </Card>
         </div>
+        </div >
     )
 }

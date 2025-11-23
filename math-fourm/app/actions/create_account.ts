@@ -1,5 +1,6 @@
 'use server';
 import Database from "better-sqlite3"
+import { redirect } from 'next/navigation'
 
 const db = new Database("main.db")
 
@@ -12,4 +13,5 @@ export async function create_account(data: FormData) {
     db.prepare(
         'INSERT INTO users (username, realname, password) VALUES (?, ?, ?);'
     ).run(username, realname, password);
+    redirect('/login')
 }
