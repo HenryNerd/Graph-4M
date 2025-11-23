@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
+import { signOutLib } from "@/lib/signoutlib";
 
-export default function Navbar() {
+export default function Navbar({username}) {
     const router = useRouter();
 
     const goToExplore = () => {
@@ -34,8 +35,8 @@ export default function Navbar() {
                     <NavigationMenuContent>
                         <div className="grid w-[300px] p-4">
                             <h1 className="text-3xl">Henry Veedahl</h1>
-                            <h2 className="text-lg font-light">@henrynerd</h2>
-                            <Button className="mt-5 bg-rose-100 text-black hover:bg-rose-200">Sign Out</Button>
+                            <h2 className="text-lg font-light">@{username}</h2>
+                            <Button className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>

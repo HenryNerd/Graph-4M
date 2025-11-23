@@ -2,10 +2,12 @@ import Project from "../components/project"
 import Navbar from "@/components/navbar";
 import db from "@/lib/db"
 
+import { auth } from "@/auth"
 
-
-export default function Home() {
-
+export default async function Home() {
+  const session = await auth();
+  console.log(session)
+  const username = session?.user?.name
   var states = [{}]
   var authors = []
   var titles = []
@@ -22,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="bg-gray-200">
-      <Navbar></Navbar>
+      <Navbar username={username}></Navbar>
       <div className="flex justify-center bg-gray-200">
         <div className="bg-gray-200 items-center">
           <div className="grid grid-cols-4 gap-6 bg-gray-200">

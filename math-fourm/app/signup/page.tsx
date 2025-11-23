@@ -1,9 +1,13 @@
-/*'use server'
-import { signup } from '@/app/actions/auth'
+'use server'
+import { create_account } from '@/app/actions/create_account'
 
 export default async function SignupPage() {
     return (
-        <form action={signup}>
+        <form action={create_account}>
+            <div>
+                <label htmlFor='realname'>Name</label>
+                <input id="realname" name="realname"/>
+            </div>
             <div>
                 <label htmlFor='username'>Username</label>
                 <input id="username" name="username"/>
@@ -16,5 +20,3 @@ export default async function SignupPage() {
         </form>
     )
 }
-
-*/

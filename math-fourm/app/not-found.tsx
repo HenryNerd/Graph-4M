@@ -14,7 +14,7 @@ export default function errorPage(){
 
 return(
     <div className="text-center bg-gray-200 width-[900px]">
-    <Navbar></Navbar>
+    <Navbar username={"TEMP"}></Navbar>
     <Image className="mx-auto mb-10" src={localImage} alt="Profile" />
     <h1 className="text-8xl">404</h1>
     <h2 className="text-3xl mt-3">Page Not Found</h2>
