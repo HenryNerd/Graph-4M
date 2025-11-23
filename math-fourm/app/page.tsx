@@ -1,8 +1,6 @@
 "use client";
 import Project from "../components/project"
 import Script from "next/script";
-import { useSession } from "next-auth/react"
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -56,8 +54,6 @@ const stateTwo = {
 };
 
 export default function Home() {
-  const { data: session } = useSession();
-  console.log("Session Data: " + session)
   const router = useRouter();
 
     const goToExplore = () => {
@@ -80,7 +76,7 @@ export default function Home() {
       <NavigationMenuTrigger className="bg-gray-200">My Profile</NavigationMenuTrigger>
       <NavigationMenuContent>
         <div className="grid w-[300px] p-4">
-          <h1 className="text-3xl">{session?.user?.name}</h1>
+          <h1 className="text-3xl">Henry Veedahl</h1>
           <h2 className="text-lg font-light">@henrynerd</h2>
           <Button className="mt-5">Sign Out</Button>
         </div>
