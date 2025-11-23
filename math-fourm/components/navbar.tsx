@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 import { signOutLib } from "@/lib/signoutlib";
 
-export default function Navbar({username}) {
+export default function Navbar({username}: any) {
     let hidelogin = true;
     if(username == "Guest") {
         hidelogin = false
@@ -46,7 +46,7 @@ export default function Navbar({username}) {
                     <NavigationMenuTrigger className="bg-gray-200">My Profile</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <div className="grid w-[300px] p-4">
-                            <h1 className="text-3xl">Henry Veedahl</h1>
+                            <h1 className="text-3xl">{username}</h1>
                             <h2 className="text-lg font-light">@{username}</h2>
                             <Button hidden={!hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
                             <Button hidden={hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={goToLogin}>Sign In</Button>
