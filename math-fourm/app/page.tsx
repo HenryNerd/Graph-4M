@@ -1,4 +1,3 @@
-import Desmos from "../components/projectDesmos";
 import Project from "../components/project"
 
 const state = {
