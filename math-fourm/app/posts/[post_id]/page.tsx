@@ -22,32 +22,32 @@ export default async function Post({
     console.log(session)
     const username = session?.user?.name || "Guest"
     const { post_id } = await params
-    const row = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
-
+    const row: any = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
+    
     if (row == undefined) {
         redirect("/");
     }
-
+    
     return (
-        <div>
-            <Navbar></Navbar>
-            <div className="justify-center">
-            <div className="w-3/4 h-[100px] border-l ml-3 mb-4">
-                <Card className="h-[100px]">
-                    <CardHeader>
-                        <CardTitle className="text-2xl">Project Name</CardTitle>
-                        <CardDescription className="text-md">By: @user</CardDescription>
-                    </CardHeader>
-                </Card>
-            </div>
-            <div className="w-4/4 h-screen">
-                <div className="w-full h-[600px] flex flex-col">
-                    <div className="flex-1 overflow-auto">
-                        <Viewer state={row.content}></Viewer>
+        <div className="bg-gray-200 min-h-screen">
+            <Navbar username={username}></Navbar>
+            <div className="flex flex-col items-center pt-4">
+                <div className="w-3/4 mb-4">
+                    <Card className="bg-rose-100">
+                        <CardHeader>
+                            <CardTitle className="text-2xl">{row.title}</CardTitle>
+                            <CardDescription className="text-md">By: @{row.author || username}</CardDescription>
+                        </CardHeader>
+                    </Card>
+                </div>
+                <div className="w-3/4">
+                    <div className="h-[600px] flex flex-col">
+                        <div className="flex-1 overflow-auto bg-white rounded-lg">
+                            <Viewer state={row.content}></Viewer>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     )
 }

@@ -50,8 +50,7 @@ export default function Navbar({username}: any) {
                     <NavigationMenuTrigger className="bg-gray-200">My Profile</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <div className="grid w-[300px] p-4">
-                            <h1 className="text-3xl">{username}</h1>
-                            <h2 className="text-lg font-light">@{username}</h2>
+                            <h1 className="text-3xl">@{username}</h1>
                             <Button hidden={!hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
                             <Button hidden={hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={goToLogin}>Sign In</Button>
                             <hr hidden={hidelogin} className="m-3"/>

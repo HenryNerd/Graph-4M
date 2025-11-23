@@ -1,7 +1,3 @@
-// export async function signup(formData: FormData) {
-//     'use server';
-// }
-
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Database from "better-sqlite3"
@@ -16,18 +12,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {label: "Password", type: "password"},
       },
       async authorize(credentials) {
-        // console.log("trying to auth")
-        // console.log(credentials)
-        // TODO: adjust so that this works if multiple people have the same username
-        // console.log(credentials.username)
-        var user = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?").get(credentials.username, credentials.password)
-        if(user===undefined) {
+        const user: any = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?").get(credentials.username, credentials.password)
+        
+        if(user === undefined) {
           throw new Error("InvalidLogin")
         }
-
+        
         console.log("gotpast")
-        return { id: user.id, name: user.username}
-        // return user
+        return { id: String(user.id), name: user.username }
       }
     })
   ],

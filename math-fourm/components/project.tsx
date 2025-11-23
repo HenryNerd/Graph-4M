@@ -83,7 +83,7 @@ export default function Project({ state, user, projectName }: ProjectProps) {
                     />
                 </div>
                 <a href={link}><CardTitle className="mt-4">{projectName}</CardTitle></a>
-                <CardDescription>By: {user}</CardDescription>
+                <CardDescription>By: @{user}</CardDescription>
             </CardContent>
         </Card>
     )
