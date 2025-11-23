@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,8 +28,13 @@ export default function RootLayout({
     <html className="bg-gray-200" lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><SessionProvider>
-        {children}
+      >
+        <Script
+          src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=c1a0cb85f3d54439ac59648737fd0bb3"
+          strategy="beforeInteractive"
+        />
+        <SessionProvider>
+          {children}
         </SessionProvider>
       </body>
     </html>
