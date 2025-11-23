@@ -1,18 +1,8 @@
 "use client";
 import Project from "../components/project"
 import Script from "next/script";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/navbar";
 
 const stateOne = {
   version: 10,
@@ -56,36 +46,16 @@ const stateTwo = {
 export default function Home() {
   const router = useRouter();
 
-    const goToExplore = () => {
+  const goToExplore = () => {
     router.push("/");
   };
 
-      const goToEditor = () => {
+  const goToEditor = () => {
     router.push("/editor");
   };
   return (
     <div className="bg-gray-200">
-<NavigationMenu className="mb-10">
-  <NavigationMenuList className="flex items-center w-full">
-    <div className="flex space-x-4">
-      <NavigationMenuLink>Home</NavigationMenuLink>
-      <NavigationMenuLink onClick={goToExplore}>Explore</NavigationMenuLink>
-      <NavigationMenuLink onClick={goToEditor}>Editor</NavigationMenuLink>
-    </div>
-    <NavigationMenuItem className="ml-auto">
-      <NavigationMenuTrigger className="bg-gray-200">My Profile</NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <div className="grid w-[300px] p-4">
-          <h1 className="text-3xl">Henry Veedahl</h1>
-          <h2 className="text-lg font-light">@henrynerd</h2>
-          <Button className="mt-5">Sign Out</Button>
-        </div>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
-  </NavigationMenuList>
-</NavigationMenu>
-
-
+      <Navbar></Navbar>
       <div className="flex justify-center bg-gray-200">
         <div className="bg-gray-200 items-center">
           <Script
