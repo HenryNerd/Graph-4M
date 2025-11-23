@@ -35,7 +35,6 @@ export default function Navbar({username}) {
         <NavigationMenu className="mb-5">
             <NavigationMenuList className="flex items-center w-full">
                 <div className="flex space-x-4">
-                    <NavigationMenuLink>Home</NavigationMenuLink>
                     <NavigationMenuLink onClick={goToExplore}>Explore</NavigationMenuLink>
                     <NavigationMenuLink onClick={goToEditor}>Editor</NavigationMenuLink>
                 </div>
