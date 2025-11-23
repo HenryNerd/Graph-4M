@@ -13,6 +13,11 @@ import { useRouter } from "next/navigation";
 import { signOutLib } from "@/lib/signoutlib";
 
 export default function Navbar({username}) {
+    let hidelogin = true;
+    if(username == "Guest") {
+        hidelogin = false
+    } 
+    console.log("info ", hidelogin)
     const router = useRouter();
 
     const goToExplore = () => {
@@ -40,8 +45,8 @@ export default function Navbar({username}) {
                         <div className="grid w-[300px] p-4">
                             <h1 className="text-3xl">Henry Veedahl</h1>
                             <h2 className="text-lg font-light">@{username}</h2>
-                            <Button className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
-                            <Button className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={goToLogin}>Sign In</Button>
+                            <Button hidden={!hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={signOutLib}>Sign Out</Button>
+                            <Button hidden={hidelogin}className="mt-5 bg-rose-100 text-black hover:bg-rose-200" onClick={goToLogin}>Sign In</Button>
                         </div>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
