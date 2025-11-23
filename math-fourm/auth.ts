@@ -21,15 +21,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // TODO: adjust so that this works if multiple people have the same username
         // console.log(credentials.username)
         var user = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?").get(credentials.username, credentials.password)
-        // console.log(user)
         // if(!user) {
         //   throw new Error("Invalid Credentials")
-        // }
-        // console.log(user)
-        // if(!user) {
         //   return null
         // }
-        return { id: 1, name: "hello" }
+
+        return { id: user.id, name: user.username}
         // return user
       }
     })

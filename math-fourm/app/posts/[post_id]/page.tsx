@@ -1,5 +1,8 @@
 import db from "@/lib/db"
 import Viewer from "@/components/viewer";
+import Navbar from "@/components/navbar";
+
+import { redirect } from "next/navigation";
 
 const state = {
     version: 10,
@@ -28,10 +31,13 @@ export default async function Post({
     const { post_id } = await params
     const row = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
 
-    console.log(row.content);
+    if (row == undefined) {
+        redirect("/");
+    }
 
     return (
         <div>
+            <Navbar></Navbar>
             <Viewer state={row.content}></Viewer>
         </div>
     )
