@@ -12,7 +12,6 @@ declare global {
 
 export default function Home() {
     const calcRef = useRef(null);
-    const formRef = useRef(null);
     const onScriptLoad = () => {
         if (window.Desmos && calcRef.current) {
             const calculator = new window.Desmos.GraphingCalculator(calcRef.current);
@@ -31,6 +30,7 @@ export default function Home() {
                 {"state": state}
             ];
             console.log(dataToSend);
+            calculator.destroy();
         }
 
     }
@@ -38,15 +38,15 @@ export default function Home() {
     return (
         <div className="overflow-hidden">
             <Form action={handleSubmit}>
-                <label>Graph Title</label>
+                <label>Graph Title: </label>
                 <input name="title"></input>
-                <label>Graph Author</label>
+                <label>Graph Author: </label>
                 <input name="author"></input>
                 <button type="submit">Save</button>
             </Form>
             <div className="align-bottom">
                 <Script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=c1a0cb85f3d54439ac59648737fd0bb3" strategy="afterInteractive" onLoad={onScriptLoad} />
-                <div id="calculator" ref={calcRef} className="w-screen h-screen"></div>
+                <div id="calculator" ref={calcRef} className="w-screen h-150"></div>
             </div>
         </div>
     );
