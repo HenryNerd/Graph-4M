@@ -11,17 +11,21 @@ export default async function Home() {
   var states = [{}]
   var authors = []
   var titles = []
-  for (let i = 0; i < 16; i++) {
-    const row = db.prepare("SELECT * FROM posts ORDER BY RANDOM() LIMIT 1").get()
-    if (row && row.content) {
-      states[i] = row.content
-      authors[i] = row.author
-      titles[i] = row.title
-    } else {
-      i--
+  var row_count = db.prepare("SELECT COUNT(*) AS count FROM posts").get()
+  const count = Number(row_count?.count ?? 0)
+  console.log(row_count)
+  if(count) {
+    for (let i = 0; i < 16; i++) {
+      const row = db.prepare("SELECT * FROM posts ORDER BY RANDOM() LIMIT 1").get()
+      if (row && row.content) {
+        states[i] = row.content
+        authors[i] = row.author
+        titles[i] = row.title
+      } else {
+        i--
+      }
     }
   }
-
   return (
     <div className="bg-gray-200">
       <Navbar username={username}></Navbar>
