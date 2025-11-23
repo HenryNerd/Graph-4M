@@ -1,58 +1,21 @@
-"use client";
 import Project from "../components/project"
 import Script from "next/script";
-import { useRouter } from "next/navigation";
 import Navbar from "@/components/navbar";
-
-const stateOne = {
-  version: 10,
-  randomSeed: "3ff2f425b09c2bb2b",
-  graph: {
-    viewport: {
-      xmin: -10,
-      ymin: -10,
-      xmax: 10,
-      ymax: 10
-    }
-  },
-  expressions: {
-    list: [
-      { id: "1", type: "expression", latex: "y=x^2" },
-      { id: "2", type: "expression", latex: "y=\\sin(x)" }
-    ]
-  }
-};
-
-const stateTwo = {
-  version: 10,
-  randomSeed: "a1b2c3d4e5f67890",
-  graph: {
-    viewport: {
-      xmin: -5,
-      ymin: -5,
-      xmax: 5,
-      ymax: 5
-    }
-  },
-  expressions: {
-    list: [
-      { id: "1", type: "expression", latex: "y=2*x+1" },
-      { id: "2", type: "expression", latex: "y=cos(x)" },
-      { id: "3", type: "expression", latex: "y=x^3-3*x" }
-    ]
-  }
-};
+import db from "@/lib/db"
 
 export default function Home() {
-  const router = useRouter();
+  var states = [{}]
+  var authors = []
+  for (let i = 0; i < 16; i++) {
+    const row = db.prepare("SELECT * FROM posts ORDER BY RANDOM() LIMIT 1").get()
+    if (row && row.content) {
+      states[i] = row.content
+      authors[i] = row.author
+    } else {
+      i--
+    }
+  }
 
-  const goToExplore = () => {
-    router.push("/");
-  };
-
-  const goToEditor = () => {
-    router.push("/editor");
-  };
   return (
     <div className="bg-gray-200">
       <Navbar></Navbar>
@@ -63,22 +26,22 @@ export default function Home() {
             strategy="afterInteractive"
           />
           <div className="grid grid-cols-4 gap-6 bg-gray-200">
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateOne} user="Test User" projectName="Hello World"></Project>
-            <Project state={stateTwo} user="Test User" projectName="Hello World"></Project>
+            <Project state={states[0]} user={authors[0]} projectName="Hello World"></Project>
+            <Project state={states[1]} user={authors[1]} projectName="Hello World"></Project>
+            <Project state={states[2]} user={authors[2]} projectName="Hello World"></Project>
+            <Project state={states[3]} user={authors[3]} projectName="Hello World"></Project>
+            <Project state={states[4]} user={authors[4]} projectName="Hello World"></Project>
+            <Project state={states[5]} user={authors[5]} projectName="Hello World"></Project>
+            <Project state={states[6]} user={authors[6]} projectName="Hello World"></Project>
+            <Project state={states[7]} user={authors[7]} projectName="Hello World"></Project>
+            <Project state={states[8]} user={authors[8]} projectName="Hello World"></Project>
+            <Project state={states[9]} user={authors[9]} projectName="Hello World"></Project>
+            <Project state={states[10]} user={authors[10]} projectName="Hello World"></Project>
+            <Project state={states[11]} user={authors[11]} projectName="Hello World"></Project>
+            <Project state={states[12]} user={authors[12]} projectName="Hello World"></Project>
+            <Project state={states[13]} user={authors[13]} projectName="Hello World"></Project>
+            <Project state={states[14]} user={authors[14]} projectName="Hello World"></Project>
+            <Project state={states[15]} user={authors[15]} projectName="Hello World"></Project>
           </div>
         </div>
       </div>
