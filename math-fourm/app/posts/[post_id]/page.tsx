@@ -1,7 +1,4 @@
-
 import db from "@/lib/db"
-// db.prepare()
-
 
 export default async function Post({
     params,
