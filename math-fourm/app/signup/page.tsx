@@ -1,4 +1,4 @@
-'use server'
+/*'use server'
 import { signup } from '@/app/actions/auth'
 
 export default async function SignupPage() {
@@ -16,3 +16,5 @@ export default async function SignupPage() {
         </form>
     )
 }
+
+*/

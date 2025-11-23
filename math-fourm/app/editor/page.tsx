@@ -1,12 +1,8 @@
 "use client";
-
-import Script from "next/script";
-import Form from "next/form";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { submit_post } from "@/app/actions/submit_post"
 import { Input } from "@/components/ui/input"
 import Navbar from "@/components/navbar";
-
 import {
     Card,
     CardContent,
@@ -14,7 +10,6 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { json } from "zod";
 
 declare global {
     interface Window {
@@ -23,47 +18,74 @@ declare global {
 }
 
 export default function Home() {
-    const calcRef = useRef(null);
-    var state = {};
-    const onScriptLoad = () => {
-        if (window.Desmos && calcRef.current) {
-            const calculator = new window.Desmos.GraphingCalculator(calcRef.current);
-            calculator.observeEvent('change', () => {
-                state = calculator.getState();
-            })
-        }
-    };
+    const calcRef = useRef<HTMLDivElement>(null);
+    const calculatorRef = useRef<any>(null);
+    const stateRef = useRef<any>({});
+
+    useEffect(() => {
+        const initCalculator = () => {
+            if (window.Desmos && calcRef.current && !calculatorRef.current) {
+                try {
+                    calculatorRef.current = window.Desmos.GraphingCalculator(calcRef.current);
+                    calculatorRef.current.observeEvent('change', () => {
+                        stateRef.current = calculatorRef.current.getState();
+                    });
+                } catch (error) {
+                    console.error("Error initializing Desmos:", error);
+                }
+            }
+        };
+
+        const timeoutId = setTimeout(() => {
+            if (window.Desmos) {
+                initCalculator();
+            } else {
+                // Fallback: wait for Desmos to load
+                const checkInterval = setInterval(() => {
+                    if (window.Desmos) {
+                        clearInterval(checkInterval);
+                        initCalculator();
+                    }
+                }, 50);
+                
+                setTimeout(() => clearInterval(checkInterval), 5000);
+            }
+        }, 100);
+
+        return () => {
+            clearTimeout(timeoutId);
+            if (calculatorRef.current) {
+                try {
+                    calculatorRef.current.destroy();
+                } catch (error) {
+                    console.error("Error destroying calculator:", error);
+                }
+                calculatorRef.current = null;
+            }
+        };
+    }, []);
 
     const handleSubmit = (formData: FormData) => {
-        if (window.Desmos && calcRef.current) {
-            const calculator = new window.Desmos.GraphingCalculator(calcRef.current, {keypad: false});
-            const title = formData.get("title");
-            const author = formData.get("author");
-            const dataToSend = {
-                "title": title,
-                "author": author,
-                "state": JSON.stringify(state) 
-            }
-            submit_post(dataToSend)
+        const title = formData.get("title");
+        const author = formData.get("author");
+        const description = formData.get("description");
+        
+        const dataToSend = {
+            "title": title,
+            "author": author,
+            "description": description,
+            "state": JSON.stringify(stateRef.current)
         }
+        
+        submit_post(dataToSend);
     }
 
     return (
         <div className="overflow-hidden bg-gray-200">
             <Navbar />
-            <div className="flex items-start bg-gray-200">
-                <div className="flex-1 bg-gray-200">
-                    <Script
-                        src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=c1a0cb85f3d54439ac59648737fd0bb3"
-                        strategy="afterInteractive"
-                        onLoad={onScriptLoad}
-                    />
-                </div>
-
-            </div>
             <div className="flex flex-1 h-[700px]">
                 <div className="flex-1 h-full m-5">
-                    <div ref={calcRef} className="w-full h-[680px]"></div>
+                    <div ref={calcRef} className="w-full h-[680px]" style={{ minHeight: '680px' }}></div>
                 </div>
                 <div className="w-1/3 h-full m-5">
                     <Card className="p-4 h-[680px]">
@@ -76,13 +98,10 @@ export default function Home() {
                             <label>Description</label>
                             <Input className="h-[100px]" name="description" required />
                             <Button className="bg-rose-100 hover:bg-rose-200 mt-8 w-full" type="submit" variant="outline">Publish</Button>
-
                         </form>
                     </Card>
                 </div>
             </div>
-
         </div>
-
     );
 }
