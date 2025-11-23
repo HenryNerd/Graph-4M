@@ -1,6 +1,8 @@
 import db from "@/lib/db"
 import Viewer from "@/components/viewer";
 
+import { redirect } from "next/navigation";
+
 const state = {
     version: 10,
     randomSeed: "3ff2f425b09c2bb2b",
@@ -27,6 +29,10 @@ export default async function Post({
 }) {
     const { post_id } = await params
     const row = db.prepare("SELECT * FROM posts WHERE title = ?").get(post_id)
+
+    if (row == undefined) {
+        redirect("/");
+    }
 
     return (
         <div>
