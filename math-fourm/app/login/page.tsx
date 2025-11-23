@@ -1,6 +1,5 @@
 import { signIn } from "@/auth"
 import { auth } from "@/auth"
-import { RedirectStatusCode } from "next/dist/client/components/redirect-status-code"
 import { redirect } from "next/navigation"
 import { AlertCircleIcon } from "lucide-react"
 import {
@@ -20,57 +19,63 @@ import {
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
+import Navbar from "@/components/navbar"
 
-export default async function SignIn() {
-    // const session = await auth()
-    // console.log(session)
+export default async function SignIn({
+    searchParams,
+}: {
+    searchParams: Promise<{ error?: string }>
+}) {
+    const params = await searchParams
+    const error = params?.error
+
     return (
-        <form
-            action={async (formData) => {
-                "use server"
-                await signIn("credentials", formData)
-            }}
-        >
-            <Alert variant="destructive">
-                <AlertCircleIcon />
-                <AlertTitle>Acount Not Found</AlertTitle>
-                <AlertDescription>
-                    Please check your username and password.
-                </AlertDescription>
-            </Alert>
-            <Card className='w-[500px] bg-gray-100'>
-                <CardHeader>
-                    <CardTitle className='text-center text-2xl'>Sign Up</CardTitle>
-                    <CardAction>
-                        <Link href="/login" className=''>
-                            Sign In
-                        </Link>
-                    </CardAction>
-                </CardHeader>
-                <CardContent className='pt-6'>
-                    <form className='flex flex-col items-center gap-4'>
-                        <div className='w-full max-w-[475px]'>
-                            <label htmlFor='realname'>Username</label>
-                            <Input name="username" type="text" />
-                        </div>
-                        <div className='w-full max-w-[475px]'>
-                            <label htmlFor='username'>Password</label>
-                            <Input name="password" type="password" />
-                        </div>
-                        <Button className='w-full max-w-[475px] bg-rose-100 hover:bg-rose-200 text-color-black' type="submit">Sign up</Button>
-                    </form>
-                </CardContent>
-            </Card>
-            <input type="hidden" name="redirectTo" value="/" />
-            <label>
-                Email
-                <input name="username" type="text" />
-            </label>
-            <label>
-                Password
-                <input name="password" type="password" />
-            </label>
-            <button>Sign In</button>
-        </form>
+        <div className="bg-gray-200 min-h-screen">
+            <Navbar username="Guest"></Navbar>
+            <div className="flex justify-center items-center">
+                <form
+                    action={async (formData) => {
+                        "use server"
+                        await signIn("credentials", formData)
+                    }}
+                >
+                    <Card className='w-[500px] bg-gray-100'>
+                        <CardHeader>
+                            <CardTitle className='text-center text-2xl'>Sign In</CardTitle>
+                            <CardAction>
+                                <Link href="/signup">
+                                    Sign Up
+                                </Link>
+                            </CardAction>
+                            {error && (
+                                <Alert className="w-full mt-6" variant="destructive">
+                                    <AlertCircleIcon className="h-4 w-4" />
+                                    <AlertTitle>Account Not Found</AlertTitle>
+                                    <AlertDescription>
+                                        Please check your username and password.
+                                    </AlertDescription>
+                                </Alert>
+                            )}
+                        </CardHeader>
+                        <CardContent className='pt-6'>
+                            <div className='flex flex-col items-center gap-4'>
+                                <div className='w-full max-w-[475px]'>
+                                    <label htmlFor='username'>Username</label>
+                                    <Input id="username" name="username" type="text" />
+                                </div>
+                                <div className='w-full max-w-[475px]'>
+                                    <label htmlFor='password'>Password</label>
+                                    <Input id="password" name="password" type="password" />
+                                </div>
+                                <Button className='w-full max-w-[475px] bg-rose-100 hover:bg-rose-200 text-color-black' type="submit">
+                                    Sign In
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    <input type="hidden" name="redirectTo" value="/" />
+                </form>
+            </div>
+        </div>
     )
 }
