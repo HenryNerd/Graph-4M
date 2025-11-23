@@ -6,14 +6,12 @@ import { auth } from "@/auth"
 
 export default async function Home() {
   const session = await auth();
-  console.log(session)
-  const username = session?.user?.name
+  const username = session?.user?.name || "Guest"
   var states = [{}]
   var authors = []
   var titles = []
   var row_count = db.prepare("SELECT COUNT(*) AS count FROM posts").get()
   const count = Number(row_count?.count ?? 0)
-  console.log(row_count)
   if(count) {
     for (let i = 0; i < 16; i++) {
       const row = db.prepare("SELECT * FROM posts ORDER BY RANDOM() LIMIT 1").get()

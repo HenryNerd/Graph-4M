@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-export default function EditorClient({ username }: { username?: string | null }) {
+export default function EditorClient({ username, auth_status }: { username?: string | null, auth_status?: boolean | false }) {
   const router = useRouter();
   const calcRef = useRef<HTMLDivElement>(null);
   const calculatorRef = useRef<any>(null);
@@ -93,13 +93,14 @@ export default function EditorClient({ username }: { username?: string | null })
 
     const dataToSend = {
       "title": title,
-      "author": author,
+      "author": username,
       "description": description,
       "state": JSON.stringify(stateRef.current)
     }
-    
-    await submit_post(dataToSend);
-    router.push("/");
+    if(!(username=="Guest")) {
+      await submit_post(dataToSend);
+      router.push("/");
+    }
   }
 
   return (
@@ -125,14 +126,14 @@ export default function EditorClient({ username }: { username?: string | null })
                 <p className="text-red-500 text-sm -mt-3 mb-3">{titleError}</p>
               )}
               
-              <label>Graph Author</label>
+              {/* <label>Graph Author</label>
               <Input 
                 className="mb-4" 
                 name="author" 
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 required 
-              />
+              /> */}
               
               <label>Description</label>
               <Input 

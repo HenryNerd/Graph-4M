@@ -13,10 +13,14 @@ import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
 import Navbar from '@/components/navbar'
 
+import { auth } from "@/auth"
+
 export default async function SignupPage() {
+    const session = await auth();
+    const username = session?.user?.name || "Guest"; 
     return (
         <div className='bg-gray-200'>
-            <Navbar username="No Acount"></Navbar>
+            <Navbar username={username}></Navbar>
             <div className='flex justify-center items-center'>
                 <Card className='w-[500px] bg-gray-100'>
                     <form action={create_account}>

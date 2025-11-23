@@ -3,7 +3,7 @@ import EditorClient from "./editorClient";
 
 export default async function EditorPage() {
   const session = await auth();
-  const username = session?.user?.name;
+  const username = session?.user?.name || "Guest"; 
   
   return <EditorClient username={username} />;
 }
