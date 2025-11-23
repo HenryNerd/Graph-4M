@@ -111,6 +111,10 @@ export default function EditorClient({ username, auth_status }: { username?: str
         }
     }
 
+    const goToLogin = () => {
+        router.push("/login")
+    }
+
     return (
         <div className="overflow-hidden bg-gray-200">
             <Navbar username={username} />
@@ -126,7 +130,7 @@ export default function EditorClient({ username, auth_status }: { username?: str
                             <AlertTitle>You Are Not Signed In</AlertTitle>
                             <AlertDescription>
                                 <p>Guest acounts are not allowed to post any projects.</p>
-                                <Button variant="outline" className="w-full p-4">Sign In</Button>
+                                <Button variant="outline" onClick={goToLogin} className="w-full p-4">Sign In</Button>
                             </AlertDescription>
                         </Alert>
                         <form onSubmit={handleSubmit} className="justify-between">
